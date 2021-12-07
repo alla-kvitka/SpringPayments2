@@ -47,7 +47,6 @@
     <tr>
         <th><fmt:message key="table.CardID"/></th>
         <th><fmt:message key="table.PaymentSum"/></th>
-        <th><fmt:message key="table.Paymenttype"/></th>
         <th>Підтвердіть платіж</th>
     </tr>
     <thead>
@@ -61,10 +60,6 @@
             <td>
                 <c:out value="${payment.paymentSum}"/>
             </td>
-            <td>
-                <c:out value="${payment.paymentType}"/>
-            </td>
-
             <td>
                 <form  action="${pageContext.request.contextPath}/submitPayment" method="post">
                     <input type="hidden" name="hidden" value="${payment.paymentId}">

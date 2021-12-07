@@ -9,20 +9,21 @@
 <html lang="${requestScope.lang}">
 <head>
     <title>All cards</title>
-    <link rel="stylesheet" href="index.styl">
-
+    <style>
+        <%@include file="/css/index.css" %>
+    </style>
 </head>
 <body>
 <div class="line"></div>
 <div class="wrapper">
     <header role="banner">
         <nav role="navigation">
-            <h1><a href="adminHomepage">Home</a></h1>
+            <h1><a href="adminHomePage">Home</a></h1>
             <ul class="nav-ul">
                 <dir></dir>
                 <dir></dir>
-                <dir><a href="allCards"><fmt:message key="header.AllCards"/></a></dir>
-                <dir><a href="allUsers"><fmt:message key="header.AllUsers"/></a></dir>
+                <dir><a href="adminAllCards"><fmt:message key="header.AllCards"/></a></dir>
+                <dir><a href="adminAllUsers"><fmt:message key="header.AllUsers"/></a></dir>
                 <dir><a href="logout"><fmt:message key="header.LogOut"/></a></dir>
             </ul>
         </nav>

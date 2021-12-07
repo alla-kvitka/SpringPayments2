@@ -59,7 +59,7 @@ public class CardServiceImpl implements CardService {
     public void updateCardBalance(long cardId, long paymentId) {
         Card card = cardRepository.getCardByCardId(cardId);
         Payment payment = paymentRepository.getPaymentByPaymentId(paymentId);
-        if (payment.getPaymentType().equalsIgnoreCase("positive"))
+        if (payment.getPaymentSum()>=0)
             card.setCardSum(card.getCardSum() + payment.getPaymentSum());
         else
             card.setCardSum(card.getCardSum() - payment.getPaymentSum());

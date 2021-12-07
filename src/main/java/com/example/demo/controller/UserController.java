@@ -3,13 +3,13 @@ package com.example.demo.controller;
 import com.example.demo.model.Card;
 import com.example.demo.model.Enums.CardStatus;
 import com.example.demo.model.Payment;
-import com.example.demo.model.Transaction;
 import com.example.demo.model.User;
 import com.example.demo.services.Impl.CardServiceImpl;
 import com.example.demo.services.Impl.PaymentServiceImpl;
 import com.example.demo.services.Impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -88,7 +88,6 @@ public class UserController {
         User user = userService.getUserByLogin(authUser.getUserLogin());
         long cardId = Long.parseLong(req.getParameter("userCardId"));
         int paymentSum = Integer.parseInt(req.getParameter("sum"));
-        String trType = req.getParameter("trType");
         Card card = cardService.searchCardByCardId(cardId);
         if (card.getUserId() != user.getUserId()) {
             System.out.println("Not user card");
@@ -96,8 +95,7 @@ public class UserController {
         if (card.getCardStatus().equals(CardStatus.BLOCKED)) {
             System.out.println("Card is blocked");
         } else
-            paymentService.createPayment(card, trType, paymentSum);
-
+            paymentService.createPayment(card, paymentSum);
         return "doPayment";
     }
 
@@ -122,10 +120,8 @@ public class UserController {
     public String userTransactionHistoryPage(Model model) {
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserByLogin(authUser.getUserLogin());
-        List<Transaction> transactions = null;
-
-
-        model.addAttribute("transactions", transactions);
+        List<Payment> transaction = userService.getUserPayments(user.getUserId(), 1);
+        model.addAttribute("transaction", transaction);
         return "transactionsHistory";
     }
 }

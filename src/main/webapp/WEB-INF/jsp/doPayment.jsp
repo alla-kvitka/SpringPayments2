@@ -48,9 +48,6 @@
             <input type='number' name='sum' placeholder=<fmt:message key="table.PaymentSum"/>/>
         </div>
         <div class="row">
-            <input type='text' name='trType' placeholder=<fmt:message key="table.positiveNegative"/>/>
-        </div>
-        <div class="row">
             <input type='submit' name=<fmt:message key="bottom.submit"/>/>
         </div>
     </form>

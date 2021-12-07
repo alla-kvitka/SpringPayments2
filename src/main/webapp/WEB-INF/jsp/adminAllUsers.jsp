@@ -8,19 +8,21 @@
 <html lang="${requestScope.lang}">
 <head>
     <title>All users</title>
-    <link rel="stylesheet" href="index.styl">
+    <style>
+        <%@include file="/css/index.css" %>
+    </style>
 </head>
 <body>
 <div class="line"></div>
 <div class="wrapper">
     <header role="banner">
         <nav role="navigation">
-            <h1><a href="adminHomepage">Home</a></h1>
+            <h1><a href="adminHomePage">Home</a></h1>
             <ul class="nav-ul">
                 <dir></dir>
                 <dir></dir>
-                <dir><a href="allCards"><fmt:message key="header.AllCards"/></a></dir>
-                <dir><a href="allUsers"><fmt:message key="header.AllUsers"/></a></dir>
+                <dir><a href="adminAllCards"><fmt:message key="header.AllCards"/></a></dir>
+                <dir><a href="adminAllUsers"><fmt:message key="header.AllUsers"/></a></dir>
                 <dir><a href="logout"><fmt:message key="header.LogOut"/></a></dir>
             </ul>
         </nav>
@@ -48,7 +50,7 @@
             <td><fmt:message key="table.UnblockUser"/></td>
         </tr>
         <p></p>
-        <c:forEach items="${requestScope.allUsers}" var="user">
+        <c:forEach items="${requestScope.userList}" var="user">
             <tr>
                 <td>
                     <c:out value="${user.userId}"/>
@@ -63,14 +65,14 @@
                     <c:out value="${user.userEmail}"/>
                 </td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/allUsers" method="post">
+                    <form action="${pageContext.request.contextPath}/adminAllUsers" method="post">
                         <input type="hidden" name="hidden" value="${user.userId}">
                         <input onclick="setTimeout(function () { window.location.reload(); }, 3)" type="submit"
                                name="button3" value=<fmt:message key="table.BlockCard"/>>
                     </form>
                 </td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/allUsers" method="post">
+                    <form action="${pageContext.request.contextPath}/adminAllUsers" method="post">
                         <input type="hidden" name="hidden" value="${user.userId}">
                         <input onclick="setTimeout(function () { window.location.reload(); }, 3)" type="submit"
                                name="button4" value=<fmt:message key="table.UnblockCard"/>>
@@ -80,30 +82,30 @@
         </c:forEach>
     </table>
 </div>
-<%--For displaying Previous link except for the 1st page --%>
-<c:if test="${currentPage != 1}">
-    <td><a href="allUsers?page=${currentPage - 1}">Previous</a></td>
-</c:if>
-<%--For displaying Page numbers.
-The when condition does not display a link for the current page--%>
-<table border="1" cellpadding="5" cellspacing="5">
-    <tr>
-        <c:forEach begin="1" end="${noOfPages}" var="i">
-            <c:choose>
-                <c:when test="${currentPage eq i}">
-                    <td>${i}</td>
-                </c:when>
-                <c:otherwise>
-                    <td><a href="allUsers?page=${i}">${i}</a></td>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </tr>
-</table>
-<%--For displaying Next link --%>
-<c:if test="${currentPage lt noOfPages}">
-    <td><a href="allUsers?page=${currentPage + 1}">Next</a></td>
-</c:if>
+<%--&lt;%&ndash;For displaying Previous link except for the 1st page &ndash;%&gt;--%>
+<%--<c:if test="${currentPage != 1}">--%>
+<%--    <td><a href="allUsers?page=${currentPage - 1}">Previous</a></td>--%>
+<%--</c:if>--%>
+<%--&lt;%&ndash;For displaying Page numbers.--%>
+<%--The when condition does not display a link for the current page&ndash;%&gt;--%>
+<%--<table border="1" cellpadding="5" cellspacing="5">--%>
+<%--    <tr>--%>
+<%--        <c:forEach begin="1" end="${noOfPages}" var="i">--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${currentPage eq i}">--%>
+<%--                    <td>${i}</td>--%>
+<%--                </c:when>--%>
+<%--                <c:otherwise>--%>
+<%--                    <td><a href="allUsers?page=${i}">${i}</a></td>--%>
+<%--                </c:otherwise>--%>
+<%--            </c:choose>--%>
+<%--        </c:forEach>--%>
+<%--    </tr>--%>
+<%--</table>--%>
+<%--&lt;%&ndash;For displaying Next link &ndash;%&gt;--%>
+<%--<c:if test="${currentPage lt noOfPages}">--%>
+<%--    <td><a href="allUsers?page=${currentPage + 1}">Next</a></td>--%>
+<%--</c:if>--%>
 
 <script>
     function settingsLang(lang) {

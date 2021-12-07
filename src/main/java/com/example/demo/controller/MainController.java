@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -46,8 +44,7 @@ public class MainController {
     @PostMapping("/registration")
     public String addNewUser(@RequestBody MultiValueMap<String, String> formData) {
         userService.saveUserFromForm(formData);
-        System.out.println(formData.get("password"));
-//        cardService.createCard(userService.getUserByLogin(formData.get("login").toString()));
+        cardService.createCard(userService.getUserByLogin(formData.get("login").toString()));
         return "login";
     }
 
