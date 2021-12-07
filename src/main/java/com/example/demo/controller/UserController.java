@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.model.Card;
 import com.example.demo.model.Enums.CardStatus;
 import com.example.demo.model.Payment;
+import com.example.demo.model.Transaction;
 import com.example.demo.model.User;
 import com.example.demo.services.Impl.CardServiceImpl;
 import com.example.demo.services.Impl.PaymentServiceImpl;
@@ -27,15 +28,13 @@ public class UserController {
     CardServiceImpl cardService;
     PaymentServiceImpl paymentService;
 
+    @Autowired
     public UserController(UserServiceImpl userService,
                           CardServiceImpl cardService, PaymentServiceImpl paymentService) {
         this.userService = userService;
         this.cardService = cardService;
         this.paymentService = paymentService;
     }
-
-    @Autowired
-
 
     @GetMapping("/homePage")
     public String userHomePage() {
@@ -78,7 +77,6 @@ public class UserController {
         return "cardInformation";
     }
 
-
     @GetMapping("/doPayment")
     public String userDoPaymentPage() {
         return "doPayment";
@@ -114,13 +112,20 @@ public class UserController {
 
     @PostMapping("/submitPayment")
     public String userSubmitPaymentPage(HttpServletRequest req) {
-
-
+        long paymentId = Long.parseLong(req.getParameter("hidden"));
+        Payment payment = paymentService.getPayment(paymentId);
+        paymentService.submitPayment(payment.getPaymentId());
         return "submitPayment";
     }
 
     @GetMapping("/transactionsHistory")
-    public String userTransactionHistoryPage() {
+    public String userTransactionHistoryPage(Model model) {
+        User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.getUserByLogin(authUser.getUserLogin());
+        List<Transaction> transactions = null;
+
+
+        model.addAttribute("transactions", transactions);
         return "transactionsHistory";
     }
 }

@@ -12,8 +12,9 @@ import java.util.List;
 public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     Payment getPaymentByPaymentId(long paymentId);
 
-//     @Query("select p From Payment as p  join Card as c ON p.card_id=c.cardId JOIN User as ON "
+    @Query("select p From Payment as p  join Card as c ON p.card_id=c.cardId " +
+            "JOIN User as u ON u.userId=c.userId WHERE u.userId=?1 and p.paymentStatus=?2")
+    List<Payment> findAllByUserIdAndAndPaymentStatus(long userId, int status);
 
-//     List<Payment> findAllByUserIdAndAndPaymentStatus(long userId, int status);
 
 }

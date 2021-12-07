@@ -18,13 +18,12 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "cards")
 public class Card {
-    @OneToMany( fetch = FetchType.EAGER,
+    @OneToMany(fetch = FetchType.EAGER,
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
     @JoinColumn(name = "card_id", referencedColumnName = "card_id")
     private List<Payment> payments = new ArrayList<>();
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

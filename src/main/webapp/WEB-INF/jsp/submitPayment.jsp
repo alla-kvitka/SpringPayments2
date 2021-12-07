@@ -42,12 +42,13 @@
     </header>
     <h2 align="center"><fmt:message key="message.SUBMITYOURPAYMENTS"/></h2>
 </div>
-<table  width="80%" align="center">
+<table width="80%" align="center">
     <thead>
     <tr>
         <th><fmt:message key="table.CardID"/></th>
         <th><fmt:message key="table.PaymentSum"/></th>
         <th><fmt:message key="table.Paymenttype"/></th>
+        <th>Підтвердіть платіж</th>
     </tr>
     <thead>
     <tbody>
@@ -55,7 +56,7 @@
     <c:forEach items="${requestScope.payments}" var="payment">
         <tr>
             <td>
-                <c:out value="${payment.cardId}"/>
+                <c:out value="${payment.card_id}"/>
             </td>
             <td>
                 <c:out value="${payment.paymentSum}"/>
@@ -63,14 +64,18 @@
             <td>
                 <c:out value="${payment.paymentType}"/>
             </td>
+
+            <td>
+                <form  action="${pageContext.request.contextPath}/submitPayment" method="post">
+                    <input type="hidden" name="hidden" value="${payment.paymentId}">
+                    <input onclick="setTimeout(function () { window.location.reload(); }, 3)" type="submit"
+                           name="button1" value=Submit>
+                </form>
+            </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-
-<form align="center" method=post>
-    <h1><input type='submit' name='submit'/></h1>
-</form>
 
 <script>
     function settingsLang(lang) {

@@ -16,6 +16,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final CardRepository cardRepository;
     private final PaymentRepository paymentRepository;
     private final UserRepository userRepository;
+    private final CardServiceImpl cardService;
 
     @Override
     public void createPayment(Card card, String trType, int paymentSum) {
@@ -28,5 +29,13 @@ public class PaymentServiceImpl implements PaymentService {
         cardRepository.save(card);
     }
 
+    public Payment getPayment(long paymentId) {
+        return paymentRepository.getPaymentByPaymentId(paymentId);
+    }
 
+    public void submitPayment(long paymentId) {
+        Payment payment = paymentRepository.getPaymentByPaymentId(paymentId);
+        cardService.updateCardBalance(payment.getCard_id(),paymentId);
+        payment.setPaymentStatus(1);
+    }
 }
