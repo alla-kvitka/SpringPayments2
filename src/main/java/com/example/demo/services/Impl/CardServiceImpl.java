@@ -65,4 +65,22 @@ public class CardServiceImpl implements CardService {
             card.setCardSum(card.getCardSum() - payment.getPaymentSum());
         cardRepository.save(card);
     }
+
+    @Override
+    public void unblockCard(long cardId) {
+        Card card = cardRepository.getCardByCardId(cardId);
+        card.setCardStatus(CardStatus.ACTIVE);
+        clearRequestToUnblock(cardId);
+        cardRepository.save(card);
+    }
+
+    public void clearRequestToUnblock(long cardId) {
+        Card card = cardRepository.getCardByCardId(cardId);
+        card.setUnblockRequest(UserRequest.NO_REQUEST);
+        cardRepository.save(card);
+    }
+
+    public List<Card> getAllCards() {
+        return cardRepository.findAll();
+    }
 }

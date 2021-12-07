@@ -11,4 +11,8 @@ public interface CardService {
     void requestToUnblock(long cardId);
 
     void updateCardBalance(long cardId,long paymentId);
+
+    void unblockCard(long cardId);
+
+
 }

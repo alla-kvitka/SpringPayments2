@@ -45,8 +45,6 @@ public class UserController {
     public String userHomePage(@RequestBody MultiValueMap<String, String> formData) {
         User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.getUserByLogin(authUser.getUserLogin());
-        System.out.println(user.getPassword());
-        System.out.println(formData.get("password"));
         if (formData.get("password").toString()
                 .equals(user.getPassword())) {
             cardService.createCard(user);
@@ -68,7 +66,6 @@ public class UserController {
     public String userCardInformationPage(HttpServletRequest req, @RequestBody MultiValueMap<String, String> formData) {
         long cardId = Long.parseLong(req.getParameter("hidden"));
         Card card = cardService.searchCardByCardId(cardId);
-        System.out.println(cardId);
         if (formData.get("button1") != null && card.getCardStatus().equals(CardStatus.ACTIVE)) {
             cardService.blockCard(cardId);
         } else if (formData.get("button2") != null && card.getCardStatus().equals(CardStatus.BLOCKED)) {

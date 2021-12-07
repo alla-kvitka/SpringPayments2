@@ -17,6 +17,4 @@ public interface PaymentRepository extends JpaRepository<Payment, Integer> {
     List<Payment> findAllByUserIdAndAndPaymentStatus(long userId, int status);
 
 
-
-
 }

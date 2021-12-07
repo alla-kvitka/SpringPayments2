@@ -1,0 +1,6 @@
+<%@ include file="/WEB-INF/jsp/jspf/taglib.jspf" %>
+
+<form>
+    <a href="?mylocale=en"><st:message code="button.english"/> </a> |
+    <a href="?mylocale=uk"><st:message code="button.ukrainian"/> </a>
+</form>

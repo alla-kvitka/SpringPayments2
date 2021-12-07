@@ -1,5 +1,8 @@
 package com.example.demo.services.Impl;
 
+import com.example.demo.model.Card;
+import com.example.demo.model.Enums.CardStatus;
+import com.example.demo.model.Enums.UserStatus;
 import com.example.demo.model.Payment;
 import com.example.demo.model.User;
 import com.example.demo.repository.PaymentRepository;
@@ -36,9 +39,28 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserLogin(login);
     }
 
+    public User getUserById (long userId){
+        return userRepository.findByUserId(userId);
+    }
+
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public void unblockUser(long userId) {
+        User user = userRepository.findByUserId(userId);
+        user.setUserStatus(UserStatus.ACTIVE.toString());
+        userRepository.save(user);
+
+    }
+
+    @Override
+    public void blockUser(long userId) {
+        User user = userRepository.findByUserId(userId);
+        user.setUserStatus(UserStatus.BlOKED.toString());
+        userRepository.save(user);
     }
 
     public List<Payment> getUserPayments(Long userId, int status) {

@@ -2,9 +2,6 @@
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${requestScope.lang}"/>
-<fmt:setBundle basename="message"/>
-
 
 <html lang="${requestScope.lang}">
 <head>
@@ -14,6 +11,9 @@
     </style>
 </head>
 <body>
+<div>
+    <%@ include file="/WEB-INF/jsp/jspf/select.jspf" %>
+</div>
 <div class="line"></div>
 <div class="wrapper">
     <header role="banner">
@@ -27,18 +27,6 @@
                 <dir><a href="logout"><fmt:message key="header.LogOut"/></a></dir>
             </ul>
         </nav>
-        <c:choose>
-            <c:when test="${requestScope.lang == 'en'}">
-                <a href="javascript:settingsLang('uk')"
-                   class="nav-link text-secondary"><span
-                        class="text-center text-muted">UK</span></a>
-            </c:when>
-            <c:otherwise>
-                <a href="javascript:settingsLang('en')"
-                   class="nav-link text-secondary"><span
-                        class="text-center text-muted">EN</span></a>
-            </c:otherwise>
-        </c:choose>
     </header>
     <h2 align="center"><fmt:message key="message.AllCards"/></h2>
     <table width="100%">
@@ -52,7 +40,7 @@
             <td><fmt:message key="table.UnblockCard"/></td>
         </tr>
         <p></p>
-        <c:forEach items="${requestScope.allCards}" var="card">
+        <c:forEach items="${requestScope.cardList}" var="card">
             <tr>
                 <td>
                     <c:out value="${card.userId}"/>
@@ -64,20 +52,20 @@
                     <c:out value="${card.cardSum}"/>
                 </td>
                 <td>
-                    <c:out value="${card.isCardStatus()}"/>
+                    <c:out value="${card.cardStatus}"/>
                 </td>
                 <td>
-                    <c:out value="${card.userRequest}"/>
+                    <c:out value="${card.unblockRequest}"/>
                 </td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/allCards" method="post">
+                    <form action="${pageContext.request.contextPath}/adminAllCards" method="post">
                         <input type="hidden" name="hidden" value="${card.cardId}">
                         <input onclick="setTimeout(function () { window.location.reload(); }, 3)" type="submit"
                                name="button3" value=<fmt:message key="table.BlockCard"/>>
                     </form>
                 </td>
                 <td>
-                    <form action="${pageContext.request.contextPath}/allCards" method="post">
+                    <form action="${pageContext.request.contextPath}/adminAllCards" method="post">
                         <input type="hidden" name="hidden" value="${card.cardId}">
                         <input onclick="setTimeout(function () { window.location.reload(); }, 3)" type="submit"
                                name="button4" value=<fmt:message key="table.UnblockCard"/>>
@@ -89,32 +77,32 @@
 </div>
 
 
-<%--For displaying Previous link except for the 1st page --%>
-<c:if test="${currentPage != 1}">
-    <td><a href="allCards?page=${currentPage - 1}">Previous</a></td>
-</c:if>
+<%--&lt;%&ndash;For displaying Previous link except for the 1st page &ndash;%&gt;--%>
+<%--<c:if test="${currentPage != 1}">--%>
+<%--    <td><a href="allCards?page=${currentPage - 1}">Previous</a></td>--%>
+<%--</c:if>--%>
 
-<%--For displaying Page numbers.
-The when condition does not display a link for the current page--%>
-<table border="1" cellpadding="5" cellspacing="5">
-    <tr>
-        <c:forEach begin="1" end="${noOfPages}" var="i">
-            <c:choose>
-                <c:when test="${currentPage eq i}">
-                    <td>${i}</td>
-                </c:when>
-                <c:otherwise>
-                    <td><a href="allCards?page=${i}">${i}</a></td>
-                </c:otherwise>
-            </c:choose>
-        </c:forEach>
-    </tr>
-</table>
+<%--&lt;%&ndash;For displaying Page numbers.--%>
+<%--The when condition does not display a link for the current page&ndash;%&gt;--%>
+<%--<table border="1" cellpadding="5" cellspacing="5">--%>
+<%--    <tr>--%>
+<%--        <c:forEach begin="1" end="${noOfPages}" var="i">--%>
+<%--            <c:choose>--%>
+<%--                <c:when test="${currentPage eq i}">--%>
+<%--                    <td>${i}</td>--%>
+<%--                </c:when>--%>
+<%--                <c:otherwise>--%>
+<%--                    <td><a href="allCards?page=${i}">${i}</a></td>--%>
+<%--                </c:otherwise>--%>
+<%--            </c:choose>--%>
+<%--        </c:forEach>--%>
+<%--    </tr>--%>
+<%--</table>--%>
 
-<%--For displaying Next link --%>
-<c:if test="${currentPage lt noOfPages}">
-    <td><a href="allCards?page=${currentPage + 1}">Next</a></td>
-</c:if>
+<%--&lt;%&ndash;For displaying Next link &ndash;%&gt;--%>
+<%--<c:if test="${currentPage lt noOfPages}">--%>
+<%--    <td><a href="allCards?page=${currentPage + 1}">Next</a></td>--%>
+<%--</c:if>--%>
 
 <script>
     function settingsLang(lang) {

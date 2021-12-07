@@ -2,8 +2,7 @@
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="${requestScope.lang}"/>
-<fmt:setBundle basename="message"/>
+
 
 <html lang="${requestScope.lang}">
 <head>
@@ -13,6 +12,9 @@
     </style>
 </head>
 <body>
+<div>
+    <%@ include file="/WEB-INF/jsp/jspf/select.jspf" %>
+</div>
 <div class="line"></div>
 <div class="wrapper">
     <header role="banner">
@@ -26,18 +28,6 @@
                 <dir><a href="logout"><fmt:message key="header.LogOut"/></a></dir>
             </ul>
         </nav>
-        <c:choose>
-            <c:when test="${requestScope.lang == 'en'}">
-                <a href="javascript:settingsLang('uk')"
-                   class="nav-link text-secondary"><span
-                        class="text-center text-muted">UK</span></a>
-            </c:when>
-            <c:otherwise>
-                <a href="javascript:settingsLang('en')"
-                   class="nav-link text-secondary"><span
-                        class="text-center text-muted">EN</span></a>
-            </c:otherwise>
-        </c:choose>
     </header>
     <h2 align="center"><fmt:message key="message.AllUsers"/></h2>
     <table width="100%">
@@ -117,6 +107,7 @@
     initial_sort_id = 0;
     initial_sort_up = 1;
     var sort_case_sensitive = false;
+
     function _sort(a, b) {
         var a = a[0];
         var b = b[0];
@@ -126,9 +117,11 @@
         else if (!sort_case_sensitive) return sort_insensitive(a, b);
         else return sort_sensitive(a, b);
     }
+
     function sort_numbers(a, b) {
         return a - b;
     }
+
     function sort_insensitive(a, b) {
         var anew = a.toLowerCase();
         var bnew = b.toLowerCase();
@@ -136,11 +129,13 @@
         if (anew > bnew) return 1;
         return 0;
     }
+
     function sort_sensitive(a, b) {
         if (a < b) return -1;
         if (a > b) return 1;
         return 0;
     }
+
     function getConcatenedTextContent(node) {
         var _result = "";
         if (node == null) {

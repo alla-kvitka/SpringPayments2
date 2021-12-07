@@ -13,4 +13,7 @@ public interface UserService {
 
     List<User> getAllUsers();
 
+    void unblockUser(long userId);
+
+    void blockUser(long userId);
 }

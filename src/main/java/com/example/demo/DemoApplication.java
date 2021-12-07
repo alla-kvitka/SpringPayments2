@@ -21,6 +21,4 @@ public class DemoApplication {
 		resolver.setViewClass(JstlView.class);
 		return resolver;
 	}
-
-
 }

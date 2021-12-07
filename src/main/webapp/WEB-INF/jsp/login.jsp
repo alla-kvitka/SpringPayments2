@@ -2,8 +2,6 @@
          pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<fmt:setLocale value="${requestScope.lang}" />
-<fmt:setBundle basename="message" />
 <html lang="${requestScope.lang}">
 <head>
     <title>Login</title>
@@ -12,6 +10,9 @@
     </style>
 </head>
 <body>
+<div>
+    <%@ include file="/WEB-INF/jsp/jspf/select.jspf" %>
+</div>
 <div class="line"></div>
 <div class="wrapper">
     <header role="banner">
@@ -23,18 +24,6 @@
                 <dir><a href="login"><fmt:message key="header.LogIn"/></a></dir>
             </ul>
         </nav>
-        <c:choose>
-            <c:when test="${requestScope.lang == 'en'}">
-                <a href="javascript:settingsLang('uk')"
-                   class="nav-link text-secondary"><span
-                        class="text-center text-muted">UK</span></a>
-            </c:when>
-            <c:otherwise>
-                <a href="javascript:settingsLang('en')"
-                   class="nav-link text-secondary"><span
-                        class="text-center text-muted">EN</span></a>
-            </c:otherwise>
-        </c:choose>
     </header>
     <h2 align="center"><fmt:message key="message.ENTERYOUR"/></h2>
     <h2 align="center"><fmt:message key="message.CREDENTIALS"/></h2>
